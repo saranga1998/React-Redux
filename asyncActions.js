@@ -5,19 +5,18 @@ const axios = require('axios');
 const createStore = redux.createStore;
 const applyMiddleware = redux.applyMiddleware;
 
-// Initial state
 const initialState = {
     loading: false,
     users: [],
     error: ''
 };
 
-// Action types
+
 const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
 const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
 const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
 
-// Action creators
+
 const fetchUsersRequest = () => {
     return { type: FETCH_USERS_REQUEST };
 };
@@ -30,7 +29,7 @@ const fetchUsersFailure = error => {
     return { type: FETCH_USERS_FAILURE, payload: error };
 };
 
-// Reducer
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_USERS_REQUEST:
@@ -44,7 +43,7 @@ const reducer = (state = initialState, action) => {
     }
 };
 
-// Async action creator (Thunk)
+
 const fetchUsers = () => {
     return function (dispatch) {
         dispatch(fetchUsersRequest());
@@ -59,13 +58,13 @@ const fetchUsers = () => {
     };
 };
 
-// Create Redux store with Thunk middleware
+
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
-// Subscribe to store updates
+
 store.subscribe(() => {
     console.log(store.getState());
 });
 
-// Dispatch async action
+
 store.dispatch(fetchUsers());
